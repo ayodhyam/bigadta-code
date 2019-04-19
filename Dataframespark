@@ -1,0 +1,48 @@
+1)	Word count in dataframe?
+Ans)
+                                                     Wordcount in data-frame
+
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder().appName("wordcount").getOrCreate()
+import spark.implicits._
+
+val one =spark.read.text("/home/gopalkrishna/Desktop/wordfile.txt")
+val linedf=one.select(split(one("value")," ").alias("words"))
+val worddf=linedf.select(explode(linedf("words")).alias("word"))
+val wordcountdf=worddf.groupBy("word").count
+wordcountdf.orderBy(desc("count")).show()
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+2)	Search word in a file & count words?
+Ans)
+                                In a file search  name & count words
+
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder().appName("wordcount").getOrCreate()
+import spark.implicits._
+
+val one =spark.read.text("/home/gopalkrishna/Desktop/wordfile.txt")
+val linedf=one.select(split(one("value")," ").alias("words"))
+val worddf=linedf.select(explode(linedf("words")).alias("word"))
+
+val th= worddf.filter(r => (r(0) =="yaswanth"))
+val re=th.groupBy().count
+
+
+ 
+
+
+
